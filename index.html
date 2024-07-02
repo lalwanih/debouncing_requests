@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <input oninput="debounce()" id="firstInput" type="number" />
+    <br />
+    <br />
+    <input oninput="debounce()" id="secondInput" type="number" />
+
+    <div id="ans">ans: </div>
+
+    <script>
+      let timeout;
+      function debounce() {
+        clearTimeout(timeout);
+        timeout = setTimeout(() => {
+          handleInput();
+        }, 1000);
+      }
+      async function handleInput() {
+        const a = document.getElementById("firstInput").value;
+        const b = document.getElementById("secondInput").value;
+        let response = await fetch(
+          "http://localhost:3001/sum?a=" + a + "&b=" + b
+        );
+        let sum = await response.json();
+        const outdiv = document.getElementById("ans");
+        outdiv.innerHTML = sum.ans;
+        
+      }
+    </script>
+  </body>
+</html>
